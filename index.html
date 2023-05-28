@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Pol light</title>
-  <script src="aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-animation-mixer/dist/aframe-animation-mixer.min.js"></script>
 </head>
-<body>
+<body style="margin: 0px; overflow: hidden;">
   <a-scene>
-    <!-- Add your A-Frame entities and components here -->
+    <a-assets>
+      <a-asset-item id="yourModel" src="https://github.com/aARdeLife/models/blob/e1ecd8477e38331b87b1564dce8938ab18ba86ef/polforweb%20(3).glb"></a-asset-item>
+    </a-assets>
+    <a-entity gltf-model="#yourModel" animation-mixer></a-entity>
   </a-scene>
 </body>
 </html>
+
