@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>A-Frame Project</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene>
+    <a-assets>
+      <a-asset-item id="yourModel" src="https://github.com/aARdeLife/models/blob/22c853fc3e2728672e31319427dbdb2384d857cb/polforweb%20(3).glb"></a-asset-item>
+    </a-assets>
+    <a-entity gltf-model="#yourModel" play-embedded-animation></a-entity>
+  </a-scene>
+
+  <script>
+    AFRAME.registerComponent('play-embedded-animation', {
+      init: function () {
+        var el = this.el;
+        el.addEventListener('model-loaded', function (e) {
+          var model = e.detail.model;
+          var clips = model.animations;
+          if (clips && clips.length > 0) {
+            var mixer = new THREE.AnimationMixer(model);
+            var action = mixer.clipAction(clips[0]); // Replace 0 with the index of the desired animation clip
+            action.play();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
