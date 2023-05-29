@@ -3,16 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>Pol light</title>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aframe-animation-mixer/dist/aframe-animation-mixer.min.js"></script>
+  <script src="C:\Users\Shadow\Downloads\Pol light\aframe.min.js"></script>
+  <script src="node_modules/ar.js/aframe/build/aframe-ar.js"></script>
+  <script src="path/to/aframe-extras.min.js"></script> <!-- Replace "path/to/aframe-extras.min.js" with the actual path to aframe-extras.min.js file in your project -->
 </head>
 <body style="margin: 0px; overflow: hidden;">
   <a-scene>
     <a-assets>
       <a-asset-item id="yourModel" src="https://github.com/aARdeLife/models/blob/e1ecd8477e38331b87b1564dce8938ab18ba86ef/polforweb%20(3).glb"></a-asset-item>
     </a-assets>
+
     <a-entity gltf-model="#yourModel" animation-mixer></a-entity>
   </a-scene>
+
+  <script>
+    AFRAME.registerComponent('animation-mixer', {
+      init: function () {
+        var model = this.el.getObject3D('mesh');
+        var mixer = new THREE.AnimationMixer(model);
+        var clips = model.animations;
+
+        if (clips && clips.length) {
+          for (var i = 0; i < clips.length; i++) {
+            var clip = clips[i];
+            var action = mixer.clipAction(clip);
+            action.play();
+          }
+        }
+
+        this.el.sceneEl.addEventListener('enter-vr', function () {
+          mixer.update(0);
+        });
+      },
+      tick: function (t, dt) {
+        if (this.mixer) {
+          this.mixer.update(dt / 1000);
+        }
+      }
+    });
+  </script>
 </body>
 </html>
 
